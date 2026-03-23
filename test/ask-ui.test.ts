@@ -98,8 +98,8 @@ describe("askSingleQuestionWithInlineNote", () => {
 			options: [{ label: "Session" }],
 		});
 
-		expect(caretAtEndLine).toContain("Session — note: split▍");
-		expect(caretMovedLine).toContain("Session — note: spl▍it");
+		expect(caretAtEndLine).toContain("Session — note: split█");
+		expect(caretMovedLine).toContain("Session — note: spl█it");
 	});
 });
 

@@ -16,6 +16,7 @@ import {
 	type AskOption,
 	type AskSelection,
 } from "./ask-logic";
+import { getLinearCursorIndexFromEditor } from "./ask-inline-editor-cursor";
 import { INLINE_NOTE_WRAP_PADDING, buildWrappedOptionLabelWithInlineNote } from "./ask-inline-note";
 import { appendWrappedTextLines } from "./ask-text-wrap";
 
@@ -105,19 +106,6 @@ export async function askSingleQuestionWithInlineNote(
 
 		const getRawNoteForOption = (optionIndex: number): string => noteByOptionIndex.get(optionIndex) ?? "";
 		const getTrimmedNoteForOption = (optionIndex: number): string => getRawNoteForOption(optionIndex).trim();
-		const getEditingCursorIndex = (): number => {
-			const lines = noteEditor.getLines();
-			const cursor = noteEditor.getCursor();
-			if (lines.length === 0) return 0;
-
-			const safeLineIndex = Math.max(0, Math.min(cursor.line, lines.length - 1));
-			const safeColumnIndex = Math.max(0, Math.min(cursor.col, lines[safeLineIndex]?.length ?? 0));
-			let linearCursorIndex = safeColumnIndex;
-			for (let lineIndex = 0; lineIndex < safeLineIndex; lineIndex++) {
-				linearCursorIndex += (lines[lineIndex]?.length ?? 0) + 1;
-			}
-			return linearCursorIndex;
-		};
 
 		const loadCurrentNoteIntoEditor = () => {
 			noteEditor.setText(getRawNoteForOption(cursorOptionIndex));
@@ -173,7 +161,9 @@ export async function askSingleQuestionWithInlineNote(
 			}
 			renderedLines.push("");
 
-			const activeEditingCursorIndex = isNoteEditorOpen ? getEditingCursorIndex() : undefined;
+			const activeEditingCursorIndex = isNoteEditorOpen
+				? getLinearCursorIndexFromEditor(noteEditor)
+				: undefined;
 			for (let optionIndex = 0; optionIndex < selectableOptionLabels.length; optionIndex++) {
 				const optionLabel = selectableOptionLabels[optionIndex];
 				const isCursorOption = optionIndex === cursorOptionIndex;

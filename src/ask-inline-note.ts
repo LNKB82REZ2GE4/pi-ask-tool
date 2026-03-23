@@ -1,7 +1,7 @@
 import { wrapTextWithAnsi } from "@mariozechner/pi-tui";
 
 const INLINE_NOTE_SEPARATOR = " — note: ";
-const INLINE_EDIT_CURSOR = "▍";
+const INLINE_EDIT_CURSOR = "█";
 
 export const INLINE_NOTE_WRAP_PADDING = 2;
 

@@ -101,39 +101,39 @@ describe("buildOptionLabelWithInlineNote", () => {
 
 	it("keeps cursor visible when inline label is constrained", () => {
 		const label = buildOptionLabelWithInlineNote("Session", "0123456789abcdef", true, 24);
-		expect(label.endsWith("▍")).toBe(true);
+		expect(label.endsWith("█")).toBe(true);
 		expect(label.length).toBeLessThanOrEqual(24);
 		expect(label.includes("…")).toBe(true);
 	});
 
 	it("keeps cursor visible for long base label in narrow width", () => {
 		const label = buildOptionLabelWithInlineNote("Other (type your own)", "", true, 22);
-		expect(label.endsWith("▍")).toBe(true);
+		expect(label.endsWith("█")).toBe(true);
 		expect(label.length).toBeLessThanOrEqual(22);
 		expect(label.includes("…")).toBe(true);
 	});
 
 	it("shows editing cursor inline when editing note", () => {
 		expect(buildOptionLabelWithInlineNote("Session", "split-session", true)).toBe(
-			"Session — note: split-session▍",
+			"Session — note: split-session█",
 		);
 		expect(buildOptionLabelWithInlineNote("Other (type your own)", "", true)).toBe(
-			"Other (type your own) — note: ▍",
+			"Other (type your own) — note: █",
 		);
 	});
 
 	it("renders editing cursor at the provided cursor index", () => {
 		expect(buildOptionLabelWithInlineNote("Session", "split-session", true, undefined, 5)).toBe(
-			"Session — note: split▍-session",
+			"Session — note: split█-session",
 		);
 		expect(buildOptionLabelWithInlineNote("Session", "split-session", true, undefined, 0)).toBe(
-			"Session — note: ▍split-session",
+			"Session — note: █split-session",
 		);
 	});
 
 	it("maps editing cursor position after sanitizing multiline text", () => {
 		expect(buildOptionLabelWithInlineNote("Session", "line1\nline2", true, undefined, 6)).toBe(
-			"Session — note: line1 ▍line2",
+			"Session — note: line1 █line2",
 		);
 	});
 });
@@ -161,7 +161,7 @@ describe("buildWrappedOptionLabelWithInlineNote", () => {
 			INLINE_NOTE_WRAP_PADDING,
 		);
 
-		expect(wrapped[wrapped.length - 1]?.endsWith("▍")).toBe(true);
+		expect(wrapped[wrapped.length - 1]?.endsWith("█")).toBe(true);
 	});
 
 	it("places wrapped editing cursor at the provided index", () => {
@@ -174,6 +174,6 @@ describe("buildWrappedOptionLabelWithInlineNote", () => {
 			4,
 		);
 
-		expect(wrapped.join(" ")).toContain("0123▍456789");
+		expect(wrapped.join(" ")).toContain("0123█456789");
 	});
 });
